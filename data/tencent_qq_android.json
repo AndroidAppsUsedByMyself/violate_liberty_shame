@@ -1,0 +1,24 @@
+{
+  "format_version": "0",
+  "app_name": "QQ",
+  "platform": "Android",
+  "package_name": "com.tencent.mobileqq",
+  "detection_methods": [
+    {
+      "version_ranges": [
+        "9.1.25",
+        "unkown"
+      ],
+      "method_name": "Xposed Check",
+      "description": "Checks if itself is hooked by Xposed",
+      "implementations": [
+        "unknown"
+      ],
+      "solutions": [
+        "Do not Xposed hook"
+      ]
+    }
+  ],
+  "additional_notes": "This app can increase detection with hot updates",
+  "last_updated": "2025-03-05"
+}
