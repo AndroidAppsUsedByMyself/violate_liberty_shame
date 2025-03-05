@@ -14,15 +14,16 @@
 
 Each app's record is stored in JSON format with the following fields:
 
+- `format_version`: json format version.
 - `app_name`: Name of the app.
 - `platform`: Platform (Android/iOS).
-- `package_name`: Package name for Android apps (leave empty for iOS).
-- `version_range`: Version range where the detection behavior applies.
+- `package_name`: Package name for Android apps (leave empty for the platforms which can not get a package name).
 - `detection_methods`: List of detection methods, including:
+  - `version_ranges`: Version ranges where the detection behavior applies.
   - `method_name`: Name of the detection method.
   - `description`: Description of the detection method.
-  - `implementation`: How the detection is implemented (e.g., code logic or system calls).
-  - `solution`: Solution to bypass the detection.
+  - `implementations`: How the detection is implemented (e.g., code logic or system calls).
+  - `solutions`: Solutions to bypass the detection.
 - `additional_notes`: Additional relevant information.
 - `last_updated`: Date of the last update.
 
