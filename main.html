@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ViolateLibertyShame JSON Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+      .field-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="date"],
+      textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      textarea {
+        resize: vertical;
+      }
+      .array-group {
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
+      button {
+        margin-top: 5px;
+        padding: 6px 12px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .detection-method {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        background-color: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>ViolateLibertyShame JSON Generator</h2>
+      <!-- 基础信息 -->
+      <div class="field-group">
+        <label for="format_version">Format Version:</label>
+        <input type="text" id="format_version" placeholder="例如：0" />
+      </div>
+      <div class="field-group">
+        <label for="app_name">App Name:</label>
+        <input type="text" id="app_name" placeholder="例如：ExampleApp" />
+      </div>
+      <div class="field-group">
+        <label for="platform">Platform:</label>
+        <input type="text" id="platform" placeholder="例如：Android 或 iOS" />
+      </div>
+      <div class="field-group">
+        <label for="package_name">Package Name:</label>
+        <input
+          type="text"
+          id="package_name"
+          placeholder="Android应用填写包名，其他平台留空"
+        />
+      </div>
+
+      <!-- detection_methods 部分 -->
+      <div id="detection_methods">
+        <h3>Detection Methods</h3>
+        <div id="detection_methods_container"></div>
+        <button type="button" onclick="addDetectionMethod()">
+          Add Detection Method
+        </button>
+      </div>
+
+      <!-- 其他信息 -->
+      <div class="field-group">
+        <label for="additional_notes">Additional Notes:</label>
+        <input
+          type="text"
+          id="additional_notes"
+          placeholder="例如：此应用在版本2.3.0加入SafetyNet检测"
+        />
+      </div>
+      <div class="field-group">
+        <label for="last_updated">Last Updated:</label>
+        <input type="date" id="last_updated" />
+      </div>
+
+      <button type="button" onclick="generateJSON()">Generate JSON</button>
+      <h3>Generated JSON:</h3>
+      <textarea id="output" readonly></textarea>
+    </div>
+
+    <script>
+      // 添加 detection method 模块
+      function addDetectionMethod() {
+        const container = document.createElement("div");
+        container.className = "detection-method";
+        container.innerHTML = `
+        <div class="field-group">
+          <label>Version Ranges:</label>
+          <div class="array-group version_ranges_container">
+            <input type="text" class="version_range" placeholder="例如：1.0.0 - 2.3.0">
+          </div>
+          <button type="button" onclick="addArrayItem(this, 'version_ranges_container', 'version_range', 'Version Range')">Add Version Range</button>
+        </div>
+        <div class="field-group">
+          <label>Method Name:</label>
+          <input type="text" class="method_name" placeholder="例如：Root Check">
+        </div>
+        <div class="field-group">
+          <label>Description:</label>
+          <input type="text" class="description" placeholder="例如：Checks if the device is rooted">
+        </div>
+        <div class="field-group">
+          <label>Implementations:</label>
+          <div class="array-group implementations_container">
+            <input type="text" class="implementation" placeholder="例如：Checks for the existence of /system/bin/su">
+          </div>
+          <button type="button" onclick="addArrayItem(this, 'implementations_container', 'implementation', 'Implementation')">Add Implementation</button>
+        </div>
+        <div class="field-group">
+          <label>Solutions:</label>
+          <div class="array-group solutions_container">
+            <input type="text" class="solution" placeholder="例如：Use Magisk Hide to hide root">
+          </div>
+          <button type="button" onclick="addArrayItem(this, 'solutions_container', 'solution', 'Solution')">Add Solution</button>
+        </div>
+      `;
+        document
+          .getElementById("detection_methods_container")
+          .appendChild(container);
+      }
+
+      // 通用的数组项添加函数
+      function addArrayItem(
+        button,
+        containerClass,
+        inputClass,
+        placeholderText,
+      ) {
+        // 定位到对应的容器
+        const container = button.parentNode.querySelector("." + containerClass);
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = inputClass;
+        input.placeholder = placeholderText;
+        container.appendChild(input);
+      }
+
+      // 生成 JSON
+      function generateJSON() {
+        const json = {
+          format_version: document.getElementById("format_version").value,
+          app_name: document.getElementById("app_name").value,
+          platform: document.getElementById("platform").value,
+          package_name: document.getElementById("package_name").value,
+          detection_methods: [],
+          additional_notes: document.getElementById("additional_notes").value,
+          last_updated: document.getElementById("last_updated").value,
+        };
+
+        // 遍历 detection_methods 模块
+        document.querySelectorAll(".detection-method").forEach((method) => {
+          const versionRanges = Array.from(
+            method.querySelectorAll(".version_range"),
+          )
+            .map((i) => i.value)
+            .filter((v) => v);
+          const implementations = Array.from(
+            method.querySelectorAll(".implementation"),
+          )
+            .map((i) => i.value)
+            .filter((v) => v);
+          const solutions = Array.from(method.querySelectorAll(".solution"))
+            .map((i) => i.value)
+            .filter((v) => v);
+          const methodName = method.querySelector(".method_name").value;
+          const description = method.querySelector(".description").value;
+
+          json.detection_methods.push({
+            version_ranges: versionRanges,
+            method_name: methodName,
+            description: description,
+            implementations: implementations,
+            solutions: solutions,
+          });
+        });
+
+        document.getElementById("output").value = JSON.stringify(json, null, 2);
+      }
+    </script>
+  </body>
+</html>
