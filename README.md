@@ -66,8 +66,8 @@ To add a record for an app called `ExampleApp`:
 ## Project Roadmap
 
 - [ ] Add more app detection records.
-- [ ] Develop automated tools to detect app detection behaviors.
-- [ ] Provide a web interface for easy browsing and searching.
+- [ ] Develop automated tools to deal with app detection behaviors.
+- [x] Provide a web interface for easy browsing and searching.
 
 ## License
 
