@@ -1,0 +1,23 @@
+{
+  "format_version": "0",
+  "app_name": "携程旅行",
+  "platform": "Android",
+  "package_name": "ctrip.android.view",
+  "detection_methods": [
+    {
+      "version_ranges": [
+        "8.79.0"
+      ],
+      "method_name": "Mount Check(?)",
+      "description": "Check if abnormal mounts exist",
+      "implementations": [],
+      "solutions": [
+        "Use nohello to hide",
+        "Use zygisk umount",
+        "Use kernelsu umount"
+      ]
+    }
+  ],
+  "additional_notes": "",
+  "last_updated": "2026-03-18"
+}
